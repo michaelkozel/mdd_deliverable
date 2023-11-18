@@ -1,0 +1,1671 @@
+
+vocabulary <http://example.com/datasheets/vocabulary/seds#> as seds {
+
+	extends <http://www.w3.org/2000/01/rdf-schema#> as rdfs
+
+	extends <http://www.w3.org/2001/XMLSchema#> as xsd
+
+	// An argument to an activity
+	concept ActivityArgumentType < FieldType
+
+	// Represents the invocation of an activity
+	concept ActivityInvocationType < StatementType
+
+	// Value is assumed to be of the correct type
+	relation ActivityInvocationType_argumentValue
+
+	scalar property ActivityInvocationType_activity [
+		functional
+	]
+
+	// The set of activities used to implement a component
+	concept ActivitySetType
+
+	relation ActivitySetType_activity
+
+	// An activity used to implement a component
+	concept ActivityType < NamedEntityType
+
+	relation ActivityType_argument
+
+	relation ActivityType_body [
+		functional
+	]
+
+	// A list of boolean comparisons, or boolean groups that are logically ANDed together. Any ORed conditions in the list are evaluated first.
+	concept ANDedConditionsType < BaseConditionsType
+
+	relation ANDedConditionsType_condition
+
+	relation ANDedConditionsType_oRedConditions
+
+	relation ANDedConditionsType_typeCondition
+
+	// An array of values of the type referenced in 'dataTypeRef' with the number of array dimensions as specified in the dimension list.
+	concept ArrayDataType < CompositeDataType
+
+	relation ArrayDataType_dimensionList [
+		functional
+	]
+
+	// The data type that this is an array of.
+	scalar property ArrayDataType_dataTypeRef [
+		functional
+	]
+
+	// The dimensions of an array, where the Dimension list is in this form: Array[1stDim][2ndDim][lastDim]. The last dimension is assumed to be the least significant - that is this dimension will cycle through its combination before the next to last dimension changes.
+	concept ArrayDimensionsType
+
+	relation ArrayDimensionsType_dimension
+
+	// An assignment to a variable
+	concept AssignmentType < StatementType
+
+	// Refer to a variable and take its value.
+	relation AssignmentType_variableRef [
+		functional
+	]
+
+	// A literal value
+	relation AssignmentType_value [
+		functional
+	]
+
+	// The variable being referred to is assumed to be of the correct type
+	scalar property AssignmentType_outputVariableRef [
+		functional
+	]
+
+	// An abstract type definition used as the base for the various elements of Boolean comparison operations.
+	aspect BaseConditionsType
+
+	// The set of types from which this interface inherits
+	concept BaseInterfaceSetType
+
+	// The set of interfaces provided or required by a component
+	relation BaseInterfaceSetType_interface
+
+	// An abstract type definition used as the base for the various elements of math operations.
+	aspect BaseMathOperationsType
+
+	// Contains a raw binary value
+	concept BinaryDataType < ScalarDataType
+
+	scalar property BinaryDataType_fixedSize [
+		functional
+	]
+
+	// The size of binary field an instance of this binary data type can hold, in bits. If fixedSize is true, the value must always be this large, if fixedSize is false, this is the maximum size.
+	scalar property BinaryDataType_sizeInBits [
+		functional
+	]
+
+	// The implementation of an activity
+	concept BodyType
+
+	relation BodyType_assignment
+
+	relation BodyType_conditional
+
+	relation BodyType_iteration
+
+	relation BodyType_calibration
+
+	relation BodyType_sendParameterPrimitive
+
+	relation BodyType_sendCommandPrimitive
+
+	relation BodyType_mathOperation
+
+	relation BodyType_call
+
+	// Check for either zero which is false, and non-zero which is true, or the other way around. Bit and byte order are ignored.
+	concept BooleanDataEncodingType < DataEncodingType
+
+	// Define the false value, true is anything non-false. The default is zero, meaning non-zero is true.
+	scalar property BooleanDataEncodingType_falseValue [
+		functional
+	]
+
+	// Specifies the number of elements in this dimension of the array.
+	scalar property BooleanDataEncodingType_sizeInBits [
+		functional
+	]
+
+	// Contains a Boolean value
+	concept BooleanDataType < ScalarDataType
+
+	relation BooleanDataType_booleanDataEncoding [
+		functional
+	]
+
+	// Holds an arbitrarily complex boolean expression
+	concept BooleanExpressionType
+
+	relation BooleanExpressionType_condition [
+		functional
+	]
+
+	relation BooleanExpressionType_aNDedConditions [
+		functional
+	]
+
+	relation BooleanExpressionType_oRedConditions [
+		functional
+	]
+
+	relation BooleanExpressionType_typeCondition [
+		functional
+	]
+
+	// The endianness of a type encoding. Big-endian has the most significant byte first.
+	scalar ByteOrderType
+
+	// A calibration operation
+	concept CalibrationType < StatementType
+
+	relation CalibrationType_splineCalibrator [
+		functional
+	]
+
+	relation CalibrationType_polynomialCalibrator [
+		functional
+	]
+
+	scalar property CalibrationType_inputVariableRef [
+		functional
+	]
+
+	scalar property CalibrationType_outputVariableRef [
+		functional
+	]
+
+	scalar Chirality
+
+	// The mode of a command argument
+	scalar CommandArgumentModeType
+
+	// An argument to a command
+	concept CommandArgumentType < ExternalFieldType
+
+	scalar property CommandArgumentType_dataUnit [
+		functional
+	]
+
+	scalar property CommandArgumentType_defaultValue [
+		functional
+	]
+
+	scalar property CommandArgumentType_mode [
+		functional
+	]
+
+	// The set of commands supported by an interface
+	concept CommandSetType
+
+	relation CommandSetType_command
+
+	// Binary operators: +, -, *, /, %, ^ operate on the top two values in the stack, leaving the result on the top of the stack. Unary operators: 1/x, x!, e^x, ln, log, and trigonometric operators operate on the top member of the stack also leaving the result on the top of the stack. 'ln' is a natural log where 'log' is a base 10 logarithm. Trigonometric operators use degrees. 'swap' swaps the top two members of the stack.
+	scalar ComparisonOperatorType
+
+	// Compare a variable to a value or another variable
+	concept ComparisonType < BaseConditionsType
+
+	relation ComparisonType_firstOperand [
+		functional
+	]
+
+	scalar property ComparisonType_comparisonOperator [
+		functional
+	]
+
+	relation ComparisonType_secondOperand [
+		functional
+	]
+
+	relation ComparisonType_value [
+		functional
+	]
+
+	// The implementation for a component type
+	concept ComponentImplementationType
+
+	relation ComponentImplementationType_variableSet [
+		functional
+	]
+
+	relation ComponentImplementationType_parameterMapSet [
+		functional
+	]
+
+	relation ComponentImplementationType_parameterActivityMapSet [
+		functional
+	]
+
+	relation ComponentImplementationType_activitySet [
+		functional
+	]
+
+	relation ComponentImplementationType_stateMachineSet [
+		functional
+	]
+
+	// The set of component types defined in this namespace
+	concept ComponentSetType
+
+	relation ComponentSetType_component
+
+	// A component type
+	concept ComponentType < NamedEntityType
+
+	relation ComponentType_providedInterfaceSet [
+		functional
+	]
+
+	relation ComponentType_requiredInterfaceSet [
+		functional
+	]
+
+	relation ComponentType_dataTypeSet [
+		functional
+	]
+
+	relation ComponentType_declaredInterfaceSet [
+		functional
+	]
+
+	relation ComponentType_implementation [
+		functional
+	]
+
+	// An abstract type used by within the schema to derive composite data types
+	aspect CompositeDataType < RootDataType
+
+	// A conditional statement for an activity
+	concept ConditionalType < StatementType
+
+	relation ConditionalType_condition [
+		functional
+	]
+
+	relation ConditionalType_onConditionTrue [
+		functional
+	]
+
+	relation ConditionalType_onConditionFalse [
+		functional
+	]
+
+	// The set of constraints on container field values.
+	concept ConstraintSetType
+
+	// Used to specify constraints of entries in ancestor (base) container types. These can be used to specify fixed values for entries or to constrain the range of an entry using a derived type.
+	relation ConstraintSetType_rangeConstraint
+
+	relation ConstraintSetType_typeConstraint
+
+	relation ConstraintSetType_valueConstraint
+
+	// A constraint on a container entry
+	aspect ContainerConstraintType < DescriptionType
+
+	scalar property ContainerConstraintType_entry [
+		functional
+	]
+
+	// An ordered list of entries usually with encoding information. Containers may inherit from other containers; when they do, the sequence in the parent Container is 'inherited' and if the location of entries in the child sequence is not specified, it is assumed to start where the parent sequence ended. Parent containers may be marked as "abstract".
+	concept ContainerDataType < CompositeDataType
+
+	relation ContainerDataType_constraintSet [
+		functional
+	]
+
+	relation ContainerDataType_entryList [
+		functional
+	]
+
+	relation ContainerDataType_trailerEntryList [
+		functional
+	]
+
+	scalar property ContainerDataType_abstract [
+		functional
+	]
+
+	// Used to specific the numeric type of which this is a sub-range.
+	scalar property ContainerDataType_baseType [
+		functional
+	]
+
+	// A container entry constraint based on a specific derived type
+	concept ContainerRangeConstraintType < ContainerConstraintType
+
+	relation ContainerRangeConstraintType_minMaxRange [
+		functional
+	]
+
+	relation ContainerRangeConstraintType_enumeratedRange [
+		functional
+	]
+
+	// A container entry constraint based on a specific derived type
+	concept ContainerTypeConstraintType < ContainerConstraintType
+
+	scalar property ContainerTypeConstraintType_type [
+		functional
+	]
+
+	// A container entry constraint based on a specific value
+	concept ContainerValueConstraintType < ContainerConstraintType
+
+	scalar property ContainerValueConstraintType_value [
+		functional
+	]
+
+	scalar CoordinateType
+
+	// Standard types of encoding and precision of floating-point data
+	scalar CoreEncodingAndPrecisionType
+
+	// Standard and local types of error control algorithm
+	scalar CoreErrorControlType
+
+	// The valid encodings for an integer data type
+	scalar CoreIntegerEncodingType
+
+	// Mathematical operators
+	scalar CoreMathOperatorsType
+
+	// Supported string encoding types
+	scalar CoreStringEncodingType
+
+	// Describes how a particular piece of data is sent or received from some non-native, off-platform device. (e.g. a spacecraft)
+	aspect DataEncodingType
+
+	// Big and Little.
+	scalar property DataEncodingType_byteOrder [
+		functional
+	]
+
+	// The root element of a datasheet
+	concept DataSheetType
+
+	// A data sheet defines the components which represent the operation of a single device
+	relation DataSheetType_device [
+		functional
+	]
+
+	relation DataSheetType_package
+
+	// A reference to a data type. This can be in the local namespace, or any other namespace.
+	scalar DataTypeRefType
+
+	// The set of data types defined in this namespace
+	concept DataTypeSetType
+
+	// Data types which are private to the component.
+	relation DataTypeSetType_arrayDataType
+
+	relation DataTypeSetType_binaryDataType
+
+	relation DataTypeSetType_booleanDataType
+
+	relation DataTypeSetType_containerDataType
+
+	relation DataTypeSetType_enumeratedDataType
+
+	relation DataTypeSetType_floatDataType
+
+	relation DataTypeSetType_integerDataType
+
+	relation DataTypeSetType_stringDataType
+
+	relation DataTypeSetType_subRangeDataType
+
+	// A date metadata value
+	concept DateMetadataValueType < MetadataValueType
+
+	// An abstract metadata value
+	scalar property DateMetadataValueType_value [
+		functional
+	]
+
+	// The valid range for a derived type or type instance. This must be a restriction (or identical, but not an extension) of the range of the base type or the type being instantiated.
+	concept DerivedTypeRangeType
+
+	// (a..b) = {x | a lt; x lt; b} -- exclusiveMinExclusiveMax [a..b] = {x | a lt;= x lt;= b} -- inclusiveMinInclusiveMax [a..b) = {x | a lt;= x lt; b} -- inclusiveMinExclusiveMax (a..b] = {x | a lt; x lt;= b} -- exclusiveMinInclusiveMax (a..+∞) greaterThan(C) [a..+∞) atLeast(C) (-∞..b) lessThan(C) (-∞..b] atMost(C)
+	scalar property DerivedTypeRangeType_precisionRange [
+		functional
+	]
+
+	relation DerivedTypeRangeType_minMaxRange [
+		functional
+	]
+
+	relation DerivedTypeRangeType_enumeratedRange [
+		functional
+	]
+
+	// An abstract type definition used as the base for NamedEntityType. It combines the short description and long description.
+	aspect DescriptionType
+
+	scalar property DescriptionType_longDescription [
+		functional
+	]
+
+	// It is strongly recommended that the short description be kept under 80 characters in length
+	scalar property DescriptionType_shortDescription [
+		functional
+	]
+
+	// The device described by this data sheet. This includes the DACP and DSAP components which implement the device interface.
+	concept DeviceType < NamedEntityType
+
+	relation DeviceType_metadata [
+		functional
+	]
+
+	scalar DifferenceConvention
+
+	// The size of a single array dimension. Exactly one of size and indexTypeRef must be specified.
+	concept DimensionSizeType
+
+	// Specifies the data type to use as an index for this array. Must be an integer, enumeration or range. The maximum legal value determines the array length.
+	scalar property DimensionSizeType_indexTypeRef [
+		functional
+	]
+
+	scalar property DimensionSizeType_size [
+		functional
+	]
+
+	scalar DoTEncodingAndPrecisionType
+
+	scalar DoTErrorControlType
+
+	scalar DoTIntegerEncodingType
+
+	scalar DoTMathOperatorsType
+
+	scalar DoTQuantityKind
+
+	scalar DoTStringEncodingType
+
+	scalar DoTUnit
+
+	// The list of entries in this container
+	concept EntryListType
+
+	relation EntryListType_entry
+
+	relation EntryListType_fixedValueEntry
+
+	relation EntryListType_paddingEntry
+
+	relation EntryListType_listEntry
+
+	// The length of string an instance of this string data type can hold in bytes. If fixedLength is true, the string must always be this long, if fixedLength is false, this is the maximum length.
+	relation EntryListType_lengthEntry
+
+	relation EntryListType_errorControlEntry
+
+	// A reference to a field within a container
+	scalar EntryRefType
+
+	// A state machine entry pseudo-state
+	concept EntryStateType < StateMachineElementType
+
+	// An entry in a container
+	concept EntryType < ExternalFieldType
+
+	// Contains an enumerated value - a value that has both an integral and a string representation.
+	concept EnumeratedDataType < ScalarDataType
+
+	relation EnumeratedDataType_integerDataEncoding [
+		functional
+	]
+
+	relation EnumeratedDataType_enumerationList [
+		functional
+	]
+
+	// The list of in-range items for an enumerated data type
+	concept EnumeratedDataTypeRangeType
+
+	scalar property EnumeratedDataTypeRangeType_label
+
+	// The miminum and maximum values here also constitute this types range.
+	concept EnumerationListType
+
+	// The list of valid items for an enumerated type
+	relation EnumerationListType_enumeration
+
+	scalar EnumerationNames
+
+	// Used for all unique names. We need to preclude spaces, '-', '.', '/', ':", "[" and "]". Only letters, digits and '_' are allowed
+	scalar EnumItemNameType
+
+	// An error control entry in a container. Has a value derived from the binary contents of the rest of the container according to a specified algortihm (e.g. CRC8).
+	concept ErrorControlEntryType < EntryType
+
+	// The type of error control code to be used for calculating this entry.
+	scalar property ErrorControlEntryType_errorControlType [
+		functional
+	]
+
+	// A state machine exit pseudo-state
+	concept ExitStateType < StateMachineElementType
+
+	scalar ExtEncodingAndPrecisionType
+
+	// An abstract type used within the schema as the parent of all type instances
+	aspect ExternalFieldType < FieldType
+
+	// An abstract type used within the schema as the parent of all type instances that can be visible outside a component
+	relation ExternalFieldType_splineCalibrator [
+		functional
+	]
+
+	relation ExternalFieldType_polynomialCalibrator [
+		functional
+	]
+
+	relation ExternalFieldType_nominalRangeSet [
+		functional
+	]
+
+	relation ExternalFieldType_safeRangeSet [
+		functional
+	]
+
+	scalar ExtErrorControlType
+
+	scalar ExtIntegerEncodingType
+
+	scalar ExtMathOperatorsType
+
+	scalar ExtQuantityKind
+
+	scalar ExtStringEncodingType
+
+	scalar ExtUnit
+
+	// The encoding for a Boolean data type "false" value
+	scalar FalseValueType
+
+	// A reference to a field, such as a variable or container entry. This includes referencing into containers (using the C-like syntax `container.field`) and array dimensions (using C-like syntax array[7]).
+	scalar FieldRefType
+
+	aspect FieldType < NamedEntityType
+
+	relation FieldType_booleanDataEncoding [
+		functional
+	]
+
+	relation FieldType_floatDataEncoding [
+		functional
+	]
+
+	relation FieldType_integerDataEncoding [
+		functional
+	]
+
+	relation FieldType_stringDataEncoding [
+		functional
+	]
+
+	relation FieldType_arrayDimensions [
+		functional
+	]
+
+	relation FieldType_validRange [
+		functional
+	]
+
+	scalar property FieldType_type [
+		functional
+	]
+
+	// An entry in a container that repeats a number of times indicated by the specified field value
+	concept FixedValueEntryType < EntryType
+
+	scalar property FixedValueEntryType_fixedValue [
+		functional
+	]
+
+	// For common encodings of floating point data
+	concept FloatDataEncodingType < DataEncodingType
+
+	scalar property FloatDataEncodingType_encodingAndPrecision [
+		functional
+	]
+
+	scalar property FloatDataEncodingType_sizeInBits [
+		functional
+	]
+
+	// Contains a floating point value
+	concept FloatDataType < NumericDataType
+
+	relation FloatDataType_floatDataEncoding [
+		functional
+	]
+
+	relation FloatDataType_range [
+		functional
+	]
+
+	// The range of values supported by a float data type
+	concept FloatDataTypeRangeType
+
+	scalar property FloatDataTypeRangeType_precisionRange [
+		functional
+	]
+
+	relation FloatDataTypeRangeType_minMaxRange [
+		functional
+	]
+
+	// A floating point metadata value
+	concept FloatMetadataValueType < MetadataValueType
+
+	scalar property FloatMetadataValueType_value [
+		functional
+	]
+
+	// The range of a float, specified as a "precision", corresponding to that supported by the corresponding IEEE754 standard.
+	scalar FloatPrecisionRangeType
+
+	// A set of alternate, mutually exclusive, groups of type mappings for a generic interface, based on patterns of values.
+	concept GenericAlternateSetType < DescriptionType
+
+	relation GenericAlternateSetType_alternate
+
+	// A group of generic type mappings to be used in an alternate set
+	concept GenericAlternateType
+
+	relation GenericAlternateType_genericTypeMap
+
+	// A set of generic type mappings representing a particular pattern of usage of a generic interface
+	concept GenericTypeMapSetType
+
+	relation GenericTypeMapSetType_genericTypeMap
+
+	relation GenericTypeMapSetType_alternateSet [
+		functional
+	]
+
+	// The mapping from a generic type in an abstract interface to a concrete type in the usage of that interface
+	concept GenericTypeMapType < FieldType
+
+	scalar property GenericTypeMapType_fixedValue [
+		functional
+	]
+
+	// The set of generic types for an interface
+	concept GenericTypeSetType
+
+	relation GenericTypeSetType_genericType
+
+	// The type for a generic type on an interface
+	concept GenericTypeType < NamedEntityType
+
+	scalar property GenericTypeType_baseType [
+		functional
+	]
+
+	scalar HealthStatus
+
+	// For all major encodings of integer data
+	concept IntegerDataEncodingType < DataEncodingType
+
+	scalar property IntegerDataEncodingType_encoding [
+		functional
+	]
+
+	scalar property IntegerDataEncodingType_sizeInBits [
+		functional
+	]
+
+	// Contains an integer value
+	concept IntegerDataType < NumericDataType
+
+	relation IntegerDataType_integerDataEncoding [
+		functional
+	]
+
+	relation IntegerDataType_range [
+		functional
+	]
+
+	// The valid range of an integer type
+	concept IntegerDataTypeRangeType
+
+	relation IntegerDataTypeRangeType_minMaxRange [
+		functional
+	]
+
+	// An integer metadata value
+	concept IntegerMetadataValueType < MetadataValueType
+
+	scalar property IntegerMetadataValueType_value [
+		functional
+	]
+
+	// The declaration of a command on in interface
+	concept InterfaceCommandType < NamedEntityType
+
+	relation InterfaceCommandType_argument
+
+	scalar property InterfaceCommandType_mode [
+		functional
+	]
+
+	// A qualified reference to an interface declaration
+	scalar InterfaceDeclarationRefType
+
+	// A set of interface types
+	concept InterfaceDeclarationSetType
+
+	relation InterfaceDeclarationSetType_interface
+
+	// A declaration of an interface type
+	concept InterfaceDeclarationType < NamedEntityType
+
+	relation InterfaceDeclarationType_baseInterfaceSet [
+		functional
+	]
+
+	relation InterfaceDeclarationType_genericTypeSet [
+		functional
+	]
+
+	relation InterfaceDeclarationType_parameterSet [
+		functional
+	]
+
+	relation InterfaceDeclarationType_commandSet [
+		functional
+	]
+
+	scalar property InterfaceDeclarationType_abstract [
+		functional
+	]
+
+	scalar property InterfaceDeclarationType_level [
+		functional
+	]
+
+	// The level within the system architecure at which an interface resides
+	scalar InterfaceLevelType
+
+	// The declaration of a parameter on an interface.
+	concept InterfaceParameterType < ExternalFieldType
+
+	scalar property InterfaceParameterType_mode [
+		functional
+	]
+
+	// If true, the variable should be considered as a fixed constant.
+	scalar property InterfaceParameterType_readOnly [
+		functional
+	]
+
+	// A reference to an interface declaration with associated generic type mapping.
+	concept InterfaceRefType
+
+	relation InterfaceRefType_genericTypeMapSet [
+		functional
+	]
+
+	scalar property InterfaceRefType_type [
+		functional
+	]
+
+	concept InterfaceSetType
+
+	relation InterfaceSetType_interface
+
+	// An interface provided or required by a component
+	concept InterfaceType < NamedEntityType
+
+	relation InterfaceType_genericTypeMapSet [
+		functional
+	]
+
+	scalar property InterfaceType_type [
+		functional
+	]
+
+	scalar Interpretation
+
+	// An iteration for an activity, either over the elements of an arrar or numeric iteration
+	concept IterationType < StatementType
+
+	scalar property IterationType_overArray [
+		functional
+	]
+
+	relation IterationType_startAt [
+		functional
+	]
+
+	relation IterationType_step [
+		functional
+	]
+
+	relation IterationType_endAt [
+		functional
+	]
+
+	relation IterationType_do [
+		functional
+	]
+
+	scalar property IterationType_iteratorVariableRef [
+		functional
+	]
+
+	// A entry in a container logically derived from length of the container. In case the entry value is not exactly the length of the container in bytes, a calibration may be used to express the relation between the two, i.e. container byte length = calibration(entry raw value).
+	concept LengthEntryType < EntryType
+
+	// An entry in a container that repeats a number of times indicated by the specified field value
+	concept ListEntryType < EntryType
+
+	scalar property ListEntryType_listLengthField [
+		functional
+	]
+
+	// A literal value. The string needs to be converted to a type matching the context in which the literal is being applied. Numerical values are assumed to be base 10 unless proceeded by 0x (hexadecimal), 0o (octal), or 0b (binary).
+	scalar LiteralValueType
+
+	// A mathematical operation for an activity
+	concept MathOperationType < StatementType
+
+	relation MathOperationType_value
+
+	relation MathOperationType_variableRef
+
+	relation MathOperationType_operator
+
+	scalar property MathOperationType_outputVariableRef [
+		functional
+	]
+
+	// A metadata category
+	concept MetadataCategoryType < NamedEntityType
+
+	relation MetadataCategoryType_metadataValueSet [
+		functional
+	]
+
+	relation MetadataCategoryType_category
+
+	// Metadata to associate with a device.
+	concept MetadataType
+
+	relation MetadataType_metadataValueSet [
+		functional
+	]
+
+	relation MetadataType_category
+
+	// A set of metadata values
+	concept MetadataValueSetType
+
+	relation MetadataValueSetType_dateValue
+
+	relation MetadataValueSetType_floatValue
+
+	relation MetadataValueSetType_integerValue
+
+	relation MetadataValueSetType_stringValue
+
+	aspect MetadataValueType < NamedEntityType
+
+	// The valid range of a numeric value specified as a minimum and/or maximum
+	concept MinMaxRangeType
+
+	scalar property MinMaxRangeType_max [
+		functional
+	]
+
+	scalar property MinMaxRangeType_min [
+		functional
+	]
+
+	scalar property MinMaxRangeType_rangeType [
+		functional
+	]
+
+	// The mode of an interface parameter or command
+	scalar ModeType
+
+	// A named argument value.
+	concept NamedArgumentValueType < OperandType
+
+	// Names may be hierearchical, seperated by a slash. This is enforced by a pattern.
+	scalar property NamedArgumentValueType_name [
+		functional
+	]
+
+	// The type definition used by most elements that require a name with optional descriptions.
+	aspect NamedEntityType < DescriptionType
+
+	scalar property NamedEntityType_chirality [
+		functional
+	]
+
+	scalar property NamedEntityType_coordinateType [
+		functional
+	]
+
+	scalar property NamedEntityType_differenceConvention [
+		functional
+	]
+
+	scalar property NamedEntityType_enumeration [
+		functional
+	]
+
+	scalar property NamedEntityType_healthStatus [
+		functional
+	]
+
+	scalar property NamedEntityType_interpretation [
+		functional
+	]
+
+	scalar property NamedEntityType_memberOf [
+		functional
+	]
+
+	scalar property NamedEntityType_name [
+		functional
+	]
+
+	scalar property NamedEntityType_purpose [
+		functional
+	]
+
+	scalar property NamedEntityType_quantityKind [
+		functional
+	]
+
+	scalar property NamedEntityType_referenceFrame [
+		functional
+	]
+
+	scalar property NamedEntityType_relationToTimestamp [
+		functional
+	]
+
+	scalar property NamedEntityType_spaceWireLinkEnablement [
+		functional
+	]
+
+	scalar property NamedEntityType_spaceWireRMAPWriteSupport [
+		functional
+	]
+
+	scalar property NamedEntityType_spWLogicalAddressRange [
+		functional
+	]
+
+	scalar property NamedEntityType_spWProtocolId [
+		functional
+	]
+
+	scalar property NamedEntityType_spWReceiveRate [
+		functional
+	]
+
+	scalar property NamedEntityType_spWRMAPAddressRange [
+		functional
+	]
+
+	scalar property NamedEntityType_spWTransmitRate [
+		functional
+	]
+
+	scalar property NamedEntityType_starTrackerOperatingMode [
+		functional
+	]
+
+	scalar property NamedEntityType_statusConvention [
+		functional
+	]
+
+	scalar property NamedEntityType_subject [
+		functional
+	]
+
+	scalar property NamedEntityType_tecOperatingMode [
+		functional
+	]
+
+	scalar property NamedEntityType_toCoordinateType [
+		functional
+	]
+
+	scalar property NamedEntityType_toFrame [
+		functional
+	]
+
+	scalar property NamedEntityType_transformationType [
+		functional
+	]
+
+	scalar property NamedEntityType_unit [
+		functional
+	]
+
+	scalar NameType
+
+	// An abstract type that is a super type of either an Integer or Float Data type.
+	aspect NumericDataType < ScalarDataType
+
+	// Represents an interface command service primitive sink, i.e. a place where commands are read from an input channel.
+	concept OnCommandPrimitiveType < PrimitiveSinkType
+
+	relation OnCommandPrimitiveType_argumentValue
+
+	scalar property OnCommandPrimitiveType_command [
+		functional
+	]
+
+	scalar property OnCommandPrimitiveType_interface [
+		functional
+	]
+
+	// Represents an interface parameter service primitive sink, i.e. a place where commands are read from an input channel.
+	concept OnParameterPrimitiveType < PrimitiveSinkType
+
+	scalar property OnParameterPrimitiveType_variableRef [
+		functional
+	]
+
+	scalar property OnParameterPrimitiveType_interface [
+		functional
+	]
+
+	scalar property OnParameterPrimitiveType_operation [
+		functional
+	]
+
+	scalar property OnParameterPrimitiveType_parameter [
+		functional
+	]
+
+	// An operand value derived from a variable or a literal
+	concept OperandType
+
+	relation OperandType_variableRef [
+		functional
+	]
+
+	relation OperandType_value [
+		functional
+	]
+
+	// A mathematical operator
+	concept OperatorType < BaseMathOperationsType
+
+	scalar property OperatorType_operator [
+		functional
+	]
+
+	scalar OrderType
+
+	scalar OrderTypeObject
+
+	// A list of boolean comparisons, or boolean groups that are logically ORed together. Any ANDed conditions in the list are evaluated first.
+	concept ORedConditionsType < BaseConditionsType
+
+	relation ORedConditionsType_condition
+
+	relation ORedConditionsType_aNDedConditions
+
+	relation ORedConditionsType_typeCondition
+
+	// The root element of a package-file
+	concept PackageFileType
+
+	// A data sheet defines the components which represent the operation of a single device
+	relation PackageFileType_package [
+		functional
+	]
+
+	relation PackageFileType_metadata [
+		functional
+	]
+
+	// A package qualifies the names of all types and interfaces defined within it
+	concept PackageType < DescriptionType
+
+	relation PackageType_dataTypeSet [
+		functional
+	]
+
+	relation PackageType_declaredInterfaceSet [
+		functional
+	]
+
+	relation PackageType_componentSet [
+		functional
+	]
+
+	scalar property PackageType_base [
+		functional
+	]
+
+	scalar property PackageType_name [
+		functional
+	]
+
+	// An entry in a container that contains a fixed number of bits that are 0 when encoded and ignored when decoded.
+	concept PaddingEntryType < DescriptionType
+
+	scalar property PaddingEntryType_sizeInBits [
+		functional
+	]
+
+	// The set of required/provided parameter mappings using activities
+	concept ParameterActivityMapSetType
+
+	relation ParameterActivityMapSetType_parameterActivityMap
+
+	// A mapping between a parameter on a required interface and a parameter on a provided interface using an activity
+	concept ParameterActivityMapType
+
+	relation ParameterActivityMapType_provided [
+		functional
+	]
+
+	relation ParameterActivityMapType_required [
+		functional
+	]
+
+	relation ParameterActivityMapType_getActivity [
+		functional
+	]
+
+	relation ParameterActivityMapType_setActivity [
+		functional
+	]
+
+	relation ParameterActivityMapType_setActivityOnly [
+		functional
+	]
+
+	// A parameter which is mapped to an interface parameter
+	concept ParameterMapDataType
+
+	scalar property ParameterMapDataType_interface [
+		functional
+	]
+
+	scalar property ParameterMapDataType_name [
+		functional
+	]
+
+	scalar property ParameterMapDataType_parameter [
+		functional
+	]
+
+	// The set of direct mapings between internal and interface parameters
+	concept ParameterMapSetType
+
+	relation ParameterMapSetType_parameterMap
+
+	// A direct mapping between an internal parameter and an interface parameter
+	concept ParameterMapType
+
+	scalar property ParameterMapType_interface [
+		functional
+	]
+
+	scalar property ParameterMapType_parameter [
+		functional
+	]
+
+	scalar property ParameterMapType_variableRef [
+		functional
+	]
+
+	// The operations possible on an interface parameter
+	scalar ParameterOperationType
+
+	// The set of parameters supported by an interface
+	concept ParameterSetType
+
+	relation ParameterSetType_parameter
+
+	// A single term from a polynomial
+	concept PolynomialTermType
+
+	// A term in a polynomial expression.
+	scalar property PolynomialTermType_coefficient [
+		functional
+	]
+
+	scalar property PolynomialTermType_exponent [
+		functional
+	]
+
+	// A polynomial expression. For example: 3 + 2x. The first coefficient belongs with the X^0 term, the next coefficient belongs to the X^1 term and so on.
+	concept PolynomialType
+
+	relation PolynomialType_term
+
+	// SEDS-specific replacement for xs:positiveInteger which more cleanly maps to native data types.
+	scalar PositiveLongType
+
+	// Represents a service primitive sink (i.e. a place where a primitive will be read from an input channel)
+	aspect PrimitiveSinkType
+
+	scalar property PrimitiveSinkType_failed [
+		functional
+	]
+
+	scalar property PrimitiveSinkType_transaction [
+		functional
+	]
+
+	// Represents a service primitive source (i.e. a place where a primitive will be sent to an output channel).
+	aspect PrimitiveSourceType < StatementType
+
+	scalar property PrimitiveSourceType_failed [
+		functional
+	]
+
+	scalar property PrimitiveSourceType_transaction [
+		functional
+	]
+
+	scalar Purpose
+
+	// A name qualified by the namespace that it exists in. Packages are separated by a '/' character. The last element of the qualified name is the name itself, everything earlier is part of the namespace name.
+	scalar QualifiedNameType
+
+	scalar RangeType
+
+	scalar ReferenceFrame
+
+	scalar RelationToTimestamp
+
+	// An abstract type used by within the schema as the parent of all other data types
+	aspect RootDataType < NamedEntityType
+
+	// An abstract type used by within the schema to derive scalar data types
+	aspect ScalarDataType < RootDataType
+
+	// Represents an interface command service primitive source
+	concept SendCommandPrimitiveType < PrimitiveSourceType
+
+	relation SendCommandPrimitiveType_argumentValue
+
+	scalar property SendCommandPrimitiveType_command [
+		functional
+	]
+
+	scalar property SendCommandPrimitiveType_interface [
+		functional
+	]
+
+	// Represents an interface parameter service primitive source
+	concept SendParameterPrimitiveType < PrimitiveSourceType
+
+	relation SendParameterPrimitiveType_argumentValue [
+		functional
+	]
+
+	scalar property SendParameterPrimitiveType_interface [
+		functional
+	]
+
+	scalar property SendParameterPrimitiveType_operation [
+		functional
+	]
+
+	scalar property SendParameterPrimitiveType_parameter [
+		functional
+	]
+
+	// A named incoming argument value.
+	concept SinkArgumentValueType
+
+	scalar property SinkArgumentValueType_name [
+		functional
+	]
+
+	scalar property SinkArgumentValueType_outputVariableRef [
+		functional
+	]
+
+	scalar SpaceWireLinkEnablement
+
+	scalar SpaceWireRMAPWriteSupport
+
+	// A spline calibration. This is a calibration type where a segmented line in a raw vs calibrated plane is described using a set of points. Raw values are converted to calibrated values by finding a position on the line corresponding to the raw value. The line may be a curve if the order is two or higher. The order of each point must be given, the highest order is order of the spline.
+	concept SplineCalibratorType
+
+	relation SplineCalibratorType_splinePoint
+
+	scalar property SplineCalibratorType_extrapolate [
+		functional
+	]
+
+	// Describe a point on a spline. Besides the raw and calibrated values the specific order may be given, one means linear. See SplineCalibratorType.
+	concept SplinePointType
+
+	scalar property SplinePointType_calibrated [
+		functional
+	]
+
+	scalar property SplinePointType_order [
+		functional
+	]
+
+	scalar property SplinePointType_raw [
+		functional
+	]
+
+	scalar SpWLogicalAddressRange
+
+	scalar SpWProtocolId
+
+	scalar SpWReceiveRate
+
+	scalar SpWRMAPAddressRange
+
+	scalar SpWTransmitRate
+
+	scalar StarTrackerOperatingMode
+
+	// An element of a state machine. This is the parent for all state machine elements.
+	aspect StateMachineElementType < NamedEntityType
+
+	// The set of state machines used to implement a component
+	concept StateMachineSetType
+
+	relation StateMachineSetType_stateMachine
+
+	// A state machine used to implement a component
+	concept StateMachineType < NamedEntityType
+
+	relation StateMachineType_entryState
+
+	relation StateMachineType_exitState
+
+	relation StateMachineType_state
+
+	relation StateMachineType_transition
+
+	scalar property StateMachineType_defaultEntryState [
+		functional
+	]
+
+	// A single step within an activity body.
+	aspect StatementType < DescriptionType
+
+	// A reference to a state machine state.
+	scalar StateRefType
+
+	// A state machine state
+	concept StateType < StateMachineElementType
+
+	relation StateType_onEntry [
+		functional
+	]
+
+	relation StateType_onExit [
+		functional
+	]
+
+	scalar StatusConvention
+
+	// For common encodings of string data
+	concept StringDataEncodingType < DataEncodingType
+
+	scalar property StringDataEncodingType_encoding [
+		functional
+	]
+
+	// The byte value used to determine the end of a string (e.g. 0 for a C string). Mandatory for variable-length strings, but syntactically optional to allow fixed-length strings without a terminator. Pascal-style encoded strings with a preceding length should be modelled as arrays of byte values.
+	scalar property StringDataEncodingType_terminationByte [
+		functional
+	]
+
+	// Contains a String Value
+	concept StringDataType < ScalarDataType
+
+	relation StringDataType_stringDataEncoding [
+		functional
+	]
+
+	scalar property StringDataType_fixedLength [
+		functional
+	]
+
+	scalar property StringDataType_length [
+		functional
+	]
+
+	// A string metadata value
+	concept StringMetadataValueType < MetadataValueType
+
+	scalar property StringMetadataValueType_value [
+		functional
+	]
+
+	// Contains a type defined as a sub-range of another. Range must be contained within that of base type.
+	concept SubRangeDataType < NumericDataType
+
+	relation SubRangeDataType_range [
+		functional
+	]
+
+	scalar property SubRangeDataType_baseType [
+		functional
+	]
+
+	scalar TecOperatingMode
+
+	// The trigger for a transition from a state a specified duration after entering it.
+	concept TimerSinkType
+
+	scalar property TimerSinkType_nanosecondsAfterEntry [
+		functional
+	]
+
+	scalar ToCoordinateType
+
+	scalar ToFrame
+
+	scalar TransformationType
+
+	// A state machine transition
+	concept TransitionType < StateMachineElementType
+
+	relation TransitionType_onCommandPrimitive [
+		functional
+	]
+
+	relation TransitionType_onParameterPrimitive [
+		functional
+	]
+
+	relation TransitionType_onTimer [
+		functional
+	]
+
+	relation TransitionType_guard [
+		functional
+	]
+
+	relation TransitionType_do [
+		functional
+	]
+
+	scalar property TransitionType_fromState [
+		functional
+	]
+
+	scalar property TransitionType_toState [
+		functional
+	]
+
+	// Check a variable for compatibility with a type
+	concept TypeCheckType < BaseConditionsType
+
+	relation TypeCheckType_firstOperand [
+		functional
+	]
+
+	scalar property TypeCheckType_typeOperand [
+		functional
+	]
+
+	// Contains a value and an associated string label
+	concept ValueEnumerationType < DescriptionType
+
+	scalar property ValueEnumerationType_chirality [
+		functional
+	]
+
+	scalar property ValueEnumerationType_coordinateType [
+		functional
+	]
+
+	scalar property ValueEnumerationType_differenceConvention [
+		functional
+	]
+
+	scalar property ValueEnumerationType_enumeration [
+		functional
+	]
+
+	scalar property ValueEnumerationType_healthStatus [
+		functional
+	]
+
+	scalar property ValueEnumerationType_interpretation [
+		functional
+	]
+
+	scalar property ValueEnumerationType_label [
+		functional
+	]
+
+	scalar property ValueEnumerationType_memberOf [
+		functional
+	]
+
+	scalar property ValueEnumerationType_purpose [
+		functional
+	]
+
+	scalar property ValueEnumerationType_referenceFrame [
+		functional
+	]
+
+	scalar property ValueEnumerationType_relationToTimestamp [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spaceWireLinkEnablement [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spaceWireRMAPWriteSupport [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spWLogicalAddressRange [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spWProtocolId [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spWReceiveRate [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spWRMAPAddressRange [
+		functional
+	]
+
+	scalar property ValueEnumerationType_spWTransmitRate [
+		functional
+	]
+
+	scalar property ValueEnumerationType_starTrackerOperatingMode [
+		functional
+	]
+
+	scalar property ValueEnumerationType_statusConvention [
+		functional
+	]
+
+	scalar property ValueEnumerationType_subject [
+		functional
+	]
+
+	scalar property ValueEnumerationType_tecOperatingMode [
+		functional
+	]
+
+	scalar property ValueEnumerationType_toCoordinateType [
+		functional
+	]
+
+	scalar property ValueEnumerationType_toFrame [
+		functional
+	]
+
+	scalar property ValueEnumerationType_transformationType [
+		functional
+	]
+
+	scalar property ValueEnumerationType_value [
+		functional
+	]
+
+	// A value as an operand to an operation
+	concept ValueOperandType < BaseMathOperationsType
+
+	scalar property ValueOperandType_value [
+		functional
+	]
+
+	// A reference to a variable as an operand to an operation
+	concept VariableRefOperandType < BaseMathOperationsType
+
+	scalar property VariableRefOperandType_variableRef [
+		functional
+	]
+
+	// A reference to a component implementation variable
+	scalar VariableRefType
+
+	// The set of variables used by a component implementation
+	concept VariableSetType
+
+	relation VariableSetType_variable
+
+	// An instance of a data type local to a component
+	concept VariableType < FieldType
+
+	// The initial value of a variable. This is only valid if the type is scalar.
+	scalar property VariableType_initialValue [
+		functional
+	]
+
+	scalar property VariableType_readOnly [
+		functional
+	]
+}
+	
